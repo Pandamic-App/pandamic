@@ -1,0 +1,43 @@
+import GameState from "../models/redux/GameState";
+import { AsyncStorage } from "react-native";
+import { getDefaultGameState } from "../reducers/rootReducer";
+
+const GAME_STATE_KEY = "state";
+const CLEAN = false;
+
+
+export default abstract class PersistState
+{
+
+	public static async loadState(): Promise<GameState | null>
+	{
+		let resultState = null;
+		if (CLEAN)
+		{
+			console.log("sas")
+			await AsyncStorage.removeItem(GAME_STATE_KEY);
+			let df = getDefaultGameState();
+			df.metadataState.loaded = true;
+			resultState = df;
+		}
+		let res = await AsyncStorage.getItem(GAME_STATE_KEY);
+		if (res)
+		{
+			try
+			{
+
+				resultState = JSON.parse(res) as GameState;
+			}
+			catch
+			{
+			}
+		}
+		console.log("Loading state : ", resultState);
+		return resultState;
+	}
+
+	public static async saveState(state: GameState)
+	{
+		await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(state));
+	}
+}

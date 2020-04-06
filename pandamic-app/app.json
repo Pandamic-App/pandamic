@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Pandamic",
+    "slug": "pandamic",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+	],
+    "android": {
+      "package": "com.wexosystems.pandamic",
+      "versionCode": 1
+    },
+    "ios": {
+	"bundleIdentifier": "com.wexosystems.pandamic",
+      "buildNumber": "1.0.0",
+	  "supportsTablet": false,
+	  "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      }
+    }
+  }
+}
