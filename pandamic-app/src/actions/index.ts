@@ -14,3 +14,5 @@ export * from "./completeTask"
 
 export * from "./updateStepsForTasks"
 
+export * from "./toggleInfoScreen"
+

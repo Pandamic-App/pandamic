@@ -94,7 +94,7 @@ TaskManager.defineTask(L_TASK_NAME, ({data,error})=>
 export function outsideOfHome(home: LatLong, at: LatLong): boolean
 {
 	let dist = distance(home.lat,home.lng,at.lat,at.lng,"K")*1000;
-	console.log(dist , " a tetves faszomtól");
+	console.log(dist , " messze.");
 	return (dist >= RAD_TOLERANCE);
 }
 

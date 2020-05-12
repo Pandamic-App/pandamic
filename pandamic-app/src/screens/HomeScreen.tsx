@@ -9,6 +9,7 @@ import HapinessBar from '../components/HapinessBar';
 import HardBorder from '../components/HardBorder';
 import PIX_SIZE from '../utils/Pixel';
 import CardBrowser from '../components/CardBrowser';
+import InfoScreen from '../components/InfoScreen';
 
 export interface Props
 {
@@ -27,6 +28,7 @@ const HomeScreen:React.FC<Props> = (props:Props) =>
 			/>
 			<Garden />
 			<CardBrowser cards={taskState.onGoingTasks}/>
+			<InfoScreen />
 		</View>
 	);
 }

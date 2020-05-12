@@ -13,16 +13,17 @@ export interface Props
 	bgColor?:string,
 	isDisabled?: boolean,
 	text: string,
-	style?:ViewStyle
+	style?:ViewStyle,
+	height?:number
 }
 
-const height = 12;
 
 const Button: React.SFC<Props> = (props) =>
 {
 	const bgColor = props.isDisabled ? "grey" : "#ffe300";
 	const textSize = props.textSize ? props.textSize : 30;
 	const bgColorTo = props.bgColor ? props.bgColor : "white";
+	const height = props.height || 12;
 
 	return (
 		<TouchableOpacity disabled={props.isDisabled} onPress={props.onPress} style={props.style}>

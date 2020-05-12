@@ -1,13 +1,14 @@
 import { handleAction, handleActions } from "redux-actions";
 import { Payload } from "../models/redux/Payload";
 import MetadataState from "../models/redux/MetadataState";
-import { CreateAccountAction, createAccount } from "../actions";
+import { CreateAccountAction, createAccount, toggleInfoScreen, ToggleInfoScreenAction } from "../actions";
 
 export function getDefaultMetadataState(): MetadataState
 {
 	return ({
 		hasAccount:false,
 		loaded:false,
+		infoScreenOpen:false
 	});
 }
 
@@ -23,6 +24,10 @@ const metadataReducer = handleActions<MetadataState, Payload>(
 			newState.baseLocation = payload.home;
 
 			return {...newState}
+		},
+		[toggleInfoScreen.toString()]: (state,action) =>{
+			const payload = action.payload as ToggleInfoScreenAction;
+			return {...state,infoScreenOpen:payload.newIsOpened};
 		}
 		/*
 		[loadSavedUserView.toString()]: (state, _payload) =>

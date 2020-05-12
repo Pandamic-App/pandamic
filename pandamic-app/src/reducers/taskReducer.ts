@@ -61,11 +61,19 @@ const taskReducer = handleActions<TaskState, Payload>(
 			const payload = action.payload as CompleteTaskAction;
 			let newGoings = Array.from(state.onGoingTasks);
 			let hapinessBonus =0;
+
 			let tk = state.onGoingTasks.find(xx=>xx.id === payload.id);
 			if (tk)
 			{
-				if (payload.pressedYes === (tk.yesIsGood === undefined ? true : tk.yesIsGood))
+				const yesIsReallyGood = tk.yesIsGood === undefined ? true : tk.yesIsGood;
+				if (payload.pressedYes == yesIsReallyGood)
+				{
 					hapinessBonus = tk.weight*0.5;
+				}
+				else
+				{
+					hapinessBonus = -tk.weight*0.3;
+				}
 				newGoings = newGoings.filter(xx=>xx.id !== payload.id);
 			}
 			return { ...state, happiness: Math.min(1, state.happiness + hapinessBonus),onGoingTasks:newGoings};

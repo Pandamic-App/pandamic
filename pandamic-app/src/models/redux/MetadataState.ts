@@ -4,7 +4,9 @@ interface MetadataState {
 	loaded:boolean,
 	hasAccount: boolean,
 	accountId?:string,
-	baseLocation?:LatLong
+	baseLocation?:LatLong,
+
+	infoScreenOpen:boolean
 }
 
 export default MetadataState;
