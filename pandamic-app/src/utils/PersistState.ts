@@ -27,12 +27,13 @@ export default abstract class PersistState
 			{
 
 				resultState = JSON.parse(res) as GameState;
+				resultState.metadataState.infoScreenOpen = false;
 			}
 			catch
 			{
 			}
 		}
-		console.log("Loading state : ", resultState);
+		resultState!.metadataState.infoScreenOpen = false;
 		return resultState;
 	}
 

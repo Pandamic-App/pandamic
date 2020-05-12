@@ -24,6 +24,13 @@
 		"title":"Rakd rendbe az asztalod",
 		"question":"Rendbe raktad az asztalod?",
 		"weight":0.150
+	},
+	{
+		"title":"Egyél rendesen",
+		"question":"Ettél egy egészséges és teljes ebédet ?",
+		"weight":0.1,
+		"fromTime":"12:00:00",
+		"toTime":"14:00:00"
 	}
 ]
 

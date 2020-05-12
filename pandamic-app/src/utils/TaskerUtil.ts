@@ -13,6 +13,59 @@ const MAX_TASKS = 5;
 
 const AllTasks:PandaTask[] = require("../../assets/tasks.json");
 
+function getSecondsToday() : number
+{
+	let date = new Date();
+	let ss = 0;
+	ss += date.getHours() *60*60;
+	ss += date.getMinutes() * 60;
+	ss += date.getSeconds();
+	return ss;
+}
+
+function getSecondsFromTimeString(ss:string) : number | null
+{
+	try {
+		let tokens = ss.split(":").map(xx=>Math.abs(parseInt(xx)));
+		let secs = 0;
+		secs += tokens[0] * 60*60;
+		secs += tokens[1] * 60;
+		secs += tokens[0];
+		return secs;
+	}
+	catch{}
+	return null;
+}
+
+function getEligiblePandaTasks() : PandaTask[]
+{
+	let tasks = Array.from(AllTasks.filter(xx=>!xx.fromTime));
+	let secondsToday = getSecondsToday();
+
+	for (let task of AllTasks)
+	{
+		if (task.fromTime && task.toTime)
+		{
+			let fromTime = getSecondsFromTimeString(task.fromTime!);
+			let toTime = getSecondsFromTimeString(task.toTime!);
+			if (fromTime && toTime)
+			{
+				if (secondsToday >= fromTime && secondsToday <= toTime)
+				{
+					tasks.push(task);
+				}
+			}
+		}
+	}
+	return tasks;
+}
+
+function pickRandom<T>(alls:T[]) : T
+{
+	let ii = Math.floor(Math.random() * alls.length);
+	return alls[ii];
+}
+
 export function dispatchNewTasks(dispatch: Dispatch<Action<any>>, taskState: TaskState)
 {
 	if (taskState.isAtHome)
@@ -20,6 +73,8 @@ export function dispatchNewTasks(dispatch: Dispatch<Action<any>>, taskState: Tas
 		let lastTask = moment(taskState.lastGotTask);
 		let minutesSinceLastTask = moment().diff(lastTask,"minutes");
 		let newTasks:DoingPandaTask[] = [];
+		let giveableTasks = getEligiblePandaTasks();
+
 		for (let ii =0; ii < minutesSinceLastTask;ii++)
 		{
 			let atmin = lastTask.add(ii,"minutes");
@@ -27,7 +82,7 @@ export function dispatchNewTasks(dispatch: Dispatch<Action<any>>, taskState: Tas
 			let prn = new Prando(seed);
 			if (prn.next() <= CHANCE_FOR_NEW_TASK_PER_MIN)
 			{
-				let base = AllTasks[Math.floor(Math.random() * AllTasks.length)];
+				let base = pickRandom(giveableTasks);
 				let newTask: DoingPandaTask = { ...base, id: makeRandomId(10),startedAt:new Date()};
 				newTasks.push(newTask);
 			}

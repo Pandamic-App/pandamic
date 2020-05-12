@@ -4,7 +4,9 @@ export interface PandaTask
 	question:string,
 	weight:number,
 	yesIsGood?:boolean,
-	requiresSteps?:number
+	requiresSteps?:number,
+	fromTime?:string,
+	toTime?:string
 }
 
 
