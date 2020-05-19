@@ -14,11 +14,13 @@
 		"title":"8 óránál ne dolgozz többet",
 		"question":"Befejezted a munkát 8 óra eltetével?",
 		"weight": 0.375
+		// "fromTime":"18:00:00",
+		// "toTime":"21:00:00"
 	},
 	{
 		"title":"Videochat barátokkal/rokonokkal",
-		"question":"Felhívtad ma az egyik barátodat? Láttad őt?",
-		"weight":0.325
+		"question":"Jó tartani a kapcsolatot egymással. Felhívtad ma az egyik barátodat? Láttad őt?",
+		"weight":0.400
 	},
 	{
 		"title":"Rakd rendbe az asztalod",
