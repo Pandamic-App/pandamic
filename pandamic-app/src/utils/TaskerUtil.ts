@@ -8,7 +8,7 @@ import { Pedometer } from 'expo-sensors';
 import Prando from "prando";
 import { updateStepsForTasks } from "../actions/updateStepsForTasks";
 
-const CHANCE_FOR_NEW_TASK_PER_MIN = 1/2*20;
+const CHANCE_FOR_NEW_TASK_PER_MIN = 1/2;
 const MAX_TASKS = 5;
 
 const AllTasks:PandaTask[] = require("../../assets/tasks.json");
@@ -57,7 +57,6 @@ function getEligiblePandaTasks(ongoing:DoingPandaTask[ ]) : PandaTask[]
 			}
 		}
 	}
-	return AllTasks.filter(xx=>xx.requiresSteps); //debug this
 	return tasks.filter(xx => !ongoing.some(ll => ll.question == xx.question));
 }
 
