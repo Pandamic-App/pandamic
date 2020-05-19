@@ -1,12 +1,12 @@
 [
 	{
 		"title":"50 perc munka után szellőztetés 10 percre",
-		"question":"Kinyitottad az ablakot?",
+		"question":"Ha nincs levegő, nehezebben fog az agy. Kinyitottad az ablakot?",
 		"weight":0.225,
 	},
 	{
 		"title": "Tegyél meg a lakásban 40-50 lépés",
-		"question": "Megtettél 40 lépést a lakásban?",
+		"question": "Kérlek, sétáljunk egy kicsit. Megtettél 40 lépést a lakásban?",
 		"weight": 0.275,
 		"requiresSteps":40
 	},
@@ -22,8 +22,10 @@
 	},
 	{
 		"title":"Rakd rendbe az asztalod",
-		"question":"Rendbe raktad az asztalod?",
+		"question":"Könnyebb úgy dolgozni, ha rend van körülötted. Rendbe raktad az asztalod?",
 		"weight":0.150
+		"fromTime":"10:00:00",
+		"toTime":"18:30:00"
 	},
 	{
 		"title":"Egyél rendesen",
