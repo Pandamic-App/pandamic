@@ -12,7 +12,8 @@ export function getTestingGameState() : GameState
 	return {
 		metadataState:{
 			loaded:true,
-			hasAccount:false,/*
+			hasAccount:false,
+			infoScreenOpen:false,/*
 			baseLocation: {
 				"lat": 47.5179137,
 				"lng": 19.1219517,

@@ -3,6 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
 import GameState from "../models/redux/GameState";
 import LatLong from "../models/LatLong";
+import { makeSureLocationsFetching } from "../utils/LocationUtils";
 
 export const createAccount = createAction<CreateAccountAction>("createAccount");
 export interface CreateAccountAction
@@ -16,6 +17,7 @@ export function thunkCreateAccount(home: LatLong, age: number): ThunkAction<void
 	{
 		//TODO : SEND AGE TO SERVER
 		console.log("setting home",home);
+		await makeSureLocationsFetching(home);
 		dispatch(createAccount({home}))
 	}
 }

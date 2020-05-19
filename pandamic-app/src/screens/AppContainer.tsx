@@ -55,9 +55,11 @@ const AppContainer:React.FC<{}> = (props) =>
 	{
 		let steppingTasks = taskState.onGoingTasks.filter(xx => xx.requiresSteps);
 		let updates = [];
+
 		for (let tk of steppingTasks)
 		{
-			updates.push({ id: tk.id, steps: steps });
+			let atSteps = Math.min(tk.atStepts! + steps,tk.requiresSteps!);
+			updates.push({ id: tk.id, steps: atSteps });
 		}
 
 		dispatch(updateStepsForTasks({ updates }));
@@ -68,6 +70,7 @@ const AppContainer:React.FC<{}> = (props) =>
 		{
 			if (TEST)
 			{
+				AsyncStorage.clear();
 				let ss = getTestingGameState();
 				dispatch(loadGameFromStorage({ gameState: ss}));
 				if (ss.metadataState.loaded)

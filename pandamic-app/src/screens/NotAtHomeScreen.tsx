@@ -5,6 +5,7 @@ import StringsUtils from '../utils/StringsUtils';
 import HapinessBar from '../components/HapinessBar';
 import Colors from '../utils/Colors';
 import PIX_SIZE from '../utils/Pixel';
+import InfoScreen from '../components/InfoScreen';
 
 const topBamboo = require("../../assets/bambooTop.png");
 const warnPand = require("../../assets/warningpanda.png");
@@ -37,6 +38,7 @@ const NotAtHomeScreen:React.FC<Props> = (props) =>
 						style={{marginTop:10}}
 					>{StringsUtils.getString("gohome")}</CustomText>
 			</View>
+			<InfoScreen />
 		</View>
 	);
 }

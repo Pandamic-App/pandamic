@@ -22,8 +22,15 @@ export function getDefaultTaskState(): TaskState
 
 const taskReducer = handleActions<TaskState, Payload>(
 	{
+		[createAccount.toString()]:(state,action)=>
+		{
+			//When they create it they are at home xf
+			return {...state,isAtHome:true,happiness:0.5};
+		},
 		[whereUpdate.toString()]:(state,action)=>{
 			const payload = action.payload as WhereUpdateAction;
+			//payload.isAtHome = false; //test
+
 			let newLastHappniess = state.lastHappinessWhenHome;
 			let newState = Object.assign({},state);
 			newState.isAtHome = payload.isAtHome;

@@ -8,7 +8,7 @@ import { Pedometer } from 'expo-sensors';
 import Prando from "prando";
 import { updateStepsForTasks } from "../actions/updateStepsForTasks";
 
-const CHANCE_FOR_NEW_TASK_PER_MIN = 10/20;
+const CHANCE_FOR_NEW_TASK_PER_MIN = 1/2*20;
 const MAX_TASKS = 5;
 
 const AllTasks:PandaTask[] = require("../../assets/tasks.json");
@@ -37,7 +37,7 @@ function getSecondsFromTimeString(ss:string) : number | null
 	return null;
 }
 
-function getEligiblePandaTasks() : PandaTask[]
+function getEligiblePandaTasks(ongoing:DoingPandaTask[ ]) : PandaTask[]
 {
 	let tasks = Array.from(AllTasks.filter(xx=>!xx.fromTime));
 	let secondsToday = getSecondsToday();
@@ -57,7 +57,8 @@ function getEligiblePandaTasks() : PandaTask[]
 			}
 		}
 	}
-	return tasks;
+	return AllTasks.filter(xx=>xx.requiresSteps); //debug this
+	return tasks.filter(xx => !ongoing.some(ll => ll.question == xx.question));
 }
 
 function pickRandom<T>(alls:T[]) : T
@@ -73,7 +74,7 @@ export function dispatchNewTasks(dispatch: Dispatch<Action<any>>, taskState: Tas
 		let lastTask = moment(taskState.lastGotTask);
 		let minutesSinceLastTask = moment().diff(lastTask,"minutes");
 		let newTasks:DoingPandaTask[] = [];
-		let giveableTasks = getEligiblePandaTasks();
+		let giveableTasks = getEligiblePandaTasks(taskState.onGoingTasks);
 
 		for (let ii =0; ii < minutesSinceLastTask;ii++)
 		{
