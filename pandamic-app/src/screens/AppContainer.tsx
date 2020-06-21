@@ -28,6 +28,7 @@ const AppContainer:React.FC<{}> = (props) =>
 	const hasAccount = useSelector((state:GameState)=>state.metadataState.loaded ? state.metadataState.hasAccount : false);
 	const taskState = useSelector((state:GameState)=>state.taskState);
 	const [shit,setShit] = useState<unknown|undefined>();
+	const otherErr = useSelector((state: GameState) => state.metadataState.otherError);
 
 	const dispatch = useThunkDispatch();
 	const home = useSelector((state:GameState)=>{
@@ -120,12 +121,12 @@ const AppContainer:React.FC<{}> = (props) =>
 
 	if (shit !== undefined)
 	{
-		return <Text>Other error : {JSON.stringify(shit)}</Text>
+		return <Text style={styles.err}>Other error : {JSON.stringify(shit)}</Text>
 	}
 
 	if (!isLoaded || !loadedState)
 	{
-		return <Text>Loading ...</Text>
+		return <Text style={styles.err}>Loading .... {isLoaded ? "elso" : "nem elso"}-{loadedState ? "masodik" : "nem masodik"} {otherErr}</Text>
 	}
 
 	try{
@@ -137,7 +138,7 @@ const AppContainer:React.FC<{}> = (props) =>
 		</React.Fragment>);
 	}catch(ex)
 	{
-		return <Text>Render error: {JSON.stringify(ex)}</Text>
+		return <Text style={styles.err}>Render error: {JSON.stringify(ex)}</Text>
 	}
 }
 
@@ -147,4 +148,8 @@ const styles = StyleSheet.create({
 	container: {
 
 	},
+	err:{
+		color:"black",
+		marginTop:60
+	}
 });

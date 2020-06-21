@@ -33,6 +33,7 @@ export default abstract class PersistState
 			}
 		}
 		resultState!.metadataState.infoScreenOpen = false;
+		resultState!.metadataState.loaded = true;
 		return resultState;
 	}
 

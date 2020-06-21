@@ -6,7 +6,8 @@ interface MetadataState {
 	accountId?:string,
 	baseLocation?:LatLong,
 
-	infoScreenOpen:boolean
+	infoScreenOpen:boolean,
+	otherError?:string
 }
 
 export default MetadataState;

@@ -18,23 +18,34 @@ export function thunkLoadGameFromStorage(): ThunkAction<void, GameState, {}, Any
 {
 	return async (dispatch, getState) =>
 	{
-		let oldState = await PersistState.loadState();
-		let newState = Object.assign({}, oldState ? oldState : getState());
-		newState.metadataState.loaded = true;
-
-		if (newState.metadataState.loaded && newState.metadataState.hasAccount)
+		try
 		{
-			await makeSureLocationsFetching(newState.metadataState.baseLocation!);
-		}
+			let oldState = await PersistState.loadState();
+			let newState = Object.assign({}, oldState ? oldState : getState());
+			newState.metadataState.loaded = true;
 
-		if (newState.metadataState.hasAccount && newState.metadataState.baseLocation)
+			if (newState.metadataState.loaded && newState.metadataState.hasAccount)
+			{
+				let didStart = await makeSureLocationsFetching(newState.metadataState.baseLocation!);
+				if (!didStart)
+					newState.metadataState.otherError = "fencing off";
+			}
+
+			if (newState.metadataState.hasAccount && newState.metadataState.baseLocation)
+			{
+				let at = await Location.getCurrentPositionAsync();
+				let atLatLng: LatLong = { lat: at.coords.latitude, lng: at.coords.longitude };
+
+				newState.taskState.isAtHome = !outsideOfHome(newState.metadataState.baseLocation!, atLatLng);
+			}
+
+			dispatch(loadGameFromStorage({ gameState: newState }))
+		} catch (ex)
 		{
-			let at = await Location.getCurrentPositionAsync();
-			let atLatLng: LatLong = { lat: at.coords.latitude, lng: at.coords.longitude };
-
-			newState.taskState.isAtHome = !outsideOfHome(newState.metadataState.baseLocation!, atLatLng);
+			let errState = getState();
+			errState.metadataState.loaded = false;
+			errState.metadataState.otherError = JSON.stringify(ex);
+			dispatch(loadGameFromStorage({ gameState: errState }))
 		}
-
-		dispatch(loadGameFromStorage({ gameState: newState }))
 	}
 }

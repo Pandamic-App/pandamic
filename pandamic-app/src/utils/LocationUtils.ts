@@ -11,7 +11,7 @@ const L_TASK_NAME = "homer";
 const UPDATES_TASK = ""
 const RAD_TOLERANCE = 100;
 
-export async function askLocationPermissions() : Promise<boolean>
+export async function askLocationPermissions(): Promise<boolean>
 {
 	if (Platform.OS === "android" && !Constants.isDevice)
 	{
@@ -30,22 +30,29 @@ export async function askLocationPermissions() : Promise<boolean>
 This API is a piece of shit I have never seen before so fucking useless and does shit ass as the specs and can suck my hairy balls omg
 */
 
-export async function makeSureLocationsFetching(home:LatLong)
+export async function makeSureLocationsFetching(home: LatLong): boolean
 {
-	console.log("fencing");
-	let fencing = (await Location.hasStartedGeofencingAsync(L_TASK_NAME));
-	if (!fencing)
+	try
 	{
-		startShit(home);
-	}
-	else
+		console.log("fencing");
+		let fencing = (await Location.hasStartedGeofencingAsync(L_TASK_NAME));
+		if (!fencing)
+		{
+			startShit(home);
+		}
+		else
+		{
+			await stopGeofencing(),
+				await startShit(home);
+		}
+	} catch
 	{
-		await stopGeofencing(),
-		await startShit(home);
+		return false;
 	}
+	return true;
 }
 
-export async function startShit(home:LatLong)
+export async function startShit(home: LatLong)
 {
 	console.log("started fencing!");
 	await Location.startGeofencingAsync(L_TASK_NAME, [{
@@ -60,8 +67,10 @@ export async function startShit(home:LatLong)
 
 export async function stopGeofencing()
 {
-	try{
-		while (true){
+	try
+	{
+		while (true)
+		{
 			await Location.stopGeofencingAsync(L_TASK_NAME);
 		}
 	}
@@ -75,12 +84,12 @@ export async function stopGeofencing()
 
 export function outsideOfHome(home: LatLong, at: LatLong): boolean
 {
-	let dist = distance(home.lat,home.lng,at.lat,at.lng,"K")*1000;
-	console.log(dist , " messze.");
+	let dist = distance(home.lat, home.lng, at.lat, at.lng, "K") * 1000;
+	console.log(dist, " messze.");
 	return (dist >= RAD_TOLERANCE);
 }
 
-function distance(lat1:number, lon1:number, lat2:number, lon2:number, unit:"M"|"K"|"N") : number
+function distance(lat1: number, lon1: number, lat2: number, lon2: number, unit: "M" | "K" | "N"): number
 {
 	if ((lat1 == lat2) && (lon1 == lon2))
 	{

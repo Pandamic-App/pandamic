@@ -14,6 +14,6 @@ export default function App()
 		);
 	} catch (ex)
 	{
-	return (<Text style={{marginTop:100}}>{JSON.stringify(ex)} - exception occured.</Text>);
+	return (<Text style={{marginTop:100,color:"black"}}>{JSON.stringify(ex)} - exception occured.</Text>);
 	}
 }
