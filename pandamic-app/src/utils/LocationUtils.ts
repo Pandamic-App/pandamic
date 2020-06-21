@@ -7,7 +7,7 @@ import LatLong from "../models/LatLong";
 import store from "../store";
 import { whereUpdate } from "../actions";
 
-const L_TASK_NAME= "homer";
+const L_TASK_NAME = "homer";
 const UPDATES_TASK = ""
 const RAD_TOLERANCE = 100;
 
@@ -71,24 +71,6 @@ export async function stopGeofencing()
 	}
 }
 
-TaskManager.defineTask(L_TASK_NAME, ({data,error})=>
-{
-	if (error)
-		return;
-
-	let _data = data as {eventType:Location.GeofencingEventType,region:Location.LocationRegion};
-
-	if (_data.eventType === Location.GeofencingEventType.Enter)
-	{
-		console.log("entering home");
-		store.dispatch(whereUpdate({isAtHome:true}));
-	}
-	else if (_data.eventType === Location.GeofencingEventType.Exit)
-	{
-		console.log("Exiting home");
-		store.dispatch(whereUpdate({ isAtHome: false }));
-	}
-});
 
 
 export function outsideOfHome(home: LatLong, at: LatLong): boolean

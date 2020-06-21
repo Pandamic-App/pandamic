@@ -12,3 +12,17 @@ export default interface TaskState
 	xp:number,
 	onGoingTasks:DoingPandaTask[]
 }
+
+export function getDefaultTaskState(): TaskState
+{
+	return ({
+		happiness: 1,
+		lastAtHome: new Date(),
+		isAtHome: false,
+		lastHappinessWhenHome: 1,
+		lastUpdatedHappiness: new Date(),
+		lastGotTask: new Date(),
+		onGoingTasks: [],
+		xp: 0
+	});
+}

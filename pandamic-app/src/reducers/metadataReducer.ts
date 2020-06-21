@@ -1,16 +1,7 @@
 import { handleAction, handleActions } from "redux-actions";
 import { Payload } from "../models/redux/Payload";
-import MetadataState from "../models/redux/MetadataState";
+import MetadataState, { getDefaultMetadataState } from "../models/redux/MetadataState";
 import { CreateAccountAction, createAccount, toggleInfoScreen, ToggleInfoScreenAction } from "../actions";
-
-export function getDefaultMetadataState(): MetadataState
-{
-	return ({
-		hasAccount:false,
-		loaded:false,
-		infoScreenOpen:false
-	});
-}
 
 const metadataReducer = handleActions<MetadataState, Payload>(
 	{

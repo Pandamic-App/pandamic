@@ -1,24 +1,10 @@
 import { handleAction, handleActions } from "redux-actions";
 import { Payload } from "../models/redux/Payload";
-import TaskState from "../models/redux/TaskState";
+import TaskState, { getDefaultTaskState } from "../models/redux/TaskState";
 import { whereUpdate, WhereUpdateAction, createAccount, CreateAccountAction, UpdateHappinessAction, updateHappiness, addNewTasks, AddNewTasksAction } from "../actions";
 import { calculateMinusHappinessFromNotBeingHome } from "../utils/HappinessUtils";
 import { completeTask, CompleteTaskAction } from "../actions/completeTask";
 import { updateStepsForTasks, UpdateStepsForTasksAction } from "../actions/updateStepsForTasks";
-
-export function getDefaultTaskState(): TaskState
-{
-	return ({
-		happiness:1,
-		lastAtHome:new Date(),
-		isAtHome:false,
-		lastHappinessWhenHome:1,
-		lastUpdatedHappiness: new Date(),
-		lastGotTask:new Date(),
-		onGoingTasks:[],
-		xp:0
-	});
-}
 
 const taskReducer = handleActions<TaskState, Payload>(
 	{

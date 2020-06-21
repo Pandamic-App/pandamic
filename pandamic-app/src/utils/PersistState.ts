@@ -1,6 +1,5 @@
-import GameState from "../models/redux/GameState";
+import GameState, { getDefaultGameState } from "../models/redux/GameState";
 import { AsyncStorage } from "react-native";
-import { getDefaultGameState } from "../reducers/rootReducer";
 
 const GAME_STATE_KEY = "state";
 const CLEAN = false;

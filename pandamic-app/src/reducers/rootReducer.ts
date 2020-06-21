@@ -1,16 +1,10 @@
 import { combineReducers, AnyAction } from "redux";
 import GameState from "../models/redux/GameState";
-import metadataReducer, { getDefaultMetadataState } from "./metadataReducer";
+import metadataReducer from "./metadataReducer";
 import { loadGameFromStorage, LoadGameFromStorageAction } from "../actions";
-import taskReducer, { getDefaultTaskState } from "./taskReducer";
+import taskReducer from "./taskReducer";
 
-export function getDefaultGameState() : GameState
-{
-	return {
-		metadataState:getDefaultMetadataState(),
-		taskState:getDefaultTaskState()
-	}
-}
+
 
 const combinedReducer = combineReducers<GameState>({
 	metadataState: metadataReducer,

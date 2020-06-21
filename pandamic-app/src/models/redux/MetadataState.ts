@@ -10,3 +10,12 @@ interface MetadataState {
 }
 
 export default MetadataState;
+
+export function getDefaultMetadataState(): MetadataState
+{
+	return ({
+		hasAccount: false,
+		loaded: false,
+		infoScreenOpen: false
+	});
+}

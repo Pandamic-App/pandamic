@@ -27,6 +27,7 @@ const AppContainer:React.FC<{}> = (props) =>
 	const loadedState = useSelector((state:GameState)=>state.metadataState.loaded);
 	const hasAccount = useSelector((state:GameState)=>state.metadataState.loaded ? state.metadataState.hasAccount : false);
 	const taskState = useSelector((state:GameState)=>state.taskState);
+	const [shit,setShit] = useState<unknown|undefined>();
 
 	const dispatch = useThunkDispatch();
 	const home = useSelector((state:GameState)=>{
@@ -83,7 +84,11 @@ const AppContainer:React.FC<{}> = (props) =>
 				dispatch(thunkLoadGameFromStorage() as any)
 			};
 		}
-		load();
+		try {load();}
+		catch(ex)
+		{
+			setShit(ex);
+		}
 
 
 		return ()=>{
@@ -95,10 +100,15 @@ const AppContainer:React.FC<{}> = (props) =>
 
 
 	useInterval(()=>{
-		if (hasAccount && isLoaded && loadedState){
-			dispatchUpdateHappiness(dispatch,taskState);
-			dispatchNewTasks(dispatch,taskState);
-			dispatchPedometerUpdates(dispatch,taskState);
+		try{
+			if (hasAccount && isLoaded && loadedState){
+				dispatchUpdateHappiness(dispatch,taskState);
+				dispatchNewTasks(dispatch,taskState);
+				dispatchPedometerUpdates(dispatch,taskState);
+			}
+		}catch(ex)
+		{
+			setShit(ex);
 		}
 	},1000);
 
@@ -108,17 +118,27 @@ const AppContainer:React.FC<{}> = (props) =>
 	});
 
 
-	if (!isLoaded || !loadedState)
+	if (shit !== undefined)
 	{
-		return <AppLoading />
+		return <Text>Other error : {JSON.stringify(shit)}</Text>
 	}
 
-	return  (
-	<React.Fragment>
-		<LocationUpdater cb={handleNewLocation}/>
-		<PedometerWatcher cb={handleNewSteps}/>
-			{(hasAccount ? (isAtHome ? <HomeScreen /> : <NotAtHomeScreen />) : <GreetingScreen />)}
-	</React.Fragment>);
+	if (!isLoaded || !loadedState)
+	{
+		return <Text>Loading ...</Text>
+	}
+
+	try{
+		return  (
+		<React.Fragment>
+			<LocationUpdater cb={handleNewLocation}/>
+			<PedometerWatcher cb={handleNewSteps}/>
+				{(hasAccount ? (isAtHome ? <HomeScreen /> : <NotAtHomeScreen />) : <GreetingScreen />)}
+		</React.Fragment>);
+	}catch(ex)
+	{
+		return <Text>Render error: {JSON.stringify(ex)}</Text>
+	}
 }
 
 export default AppContainer;

@@ -1,6 +1,5 @@
-import MetadataState from "./MetadataState";
-import TaskState from "./TaskState";
-import { getDefaultTaskState } from "../../reducers/taskReducer";
+import MetadataState, { getDefaultMetadataState } from "./MetadataState";
+import TaskState, { getDefaultTaskState } from "./TaskState";
 export default interface GameState
 {
 	metadataState:MetadataState,
@@ -20,6 +19,14 @@ export function getTestingGameState() : GameState
 			},
 			accountId:"1"*/
 		},
+		taskState: getDefaultTaskState()
+	}
+}
+
+export function getDefaultGameState(): GameState
+{
+	return {
+		metadataState: getDefaultMetadataState(),
 		taskState: getDefaultTaskState()
 	}
 }

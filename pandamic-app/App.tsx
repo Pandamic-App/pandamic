@@ -6,9 +6,14 @@ import AppContainer from './src/screens/AppContainer';
 
 export default function App()
 {
-	return (
-		<Provider store={store}>
-			<AppContainer/>
-		</Provider>
-	);
+	try {
+		return (
+			<Provider store={store}>
+				<AppContainer/>
+			</Provider>
+		);
+	} catch (ex)
+	{
+	return (<Text style={{marginTop:100}}>{JSON.stringify(ex)} - exception occured.</Text>);
+	}
 }
