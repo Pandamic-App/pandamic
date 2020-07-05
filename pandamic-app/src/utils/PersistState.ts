@@ -22,16 +22,14 @@ export default abstract class PersistState
 		let res = await AsyncStorage.getItem(GAME_STATE_KEY);
 		if (res)
 		{
-			try
-			{
-
-				resultState = JSON.parse(res) as GameState;
-				resultState.metadataState.infoScreenOpen = false;
-			}
-			catch
-			{
-			}
+			resultState = JSON.parse(res) as GameState;
+			resultState.metadataState.infoScreenOpen = false;
 		}
+		else
+		{
+			resultState = getDefaultGameState();
+		}
+
 		resultState!.metadataState.infoScreenOpen = false;
 		resultState!.metadataState.loaded = true;
 		return resultState;
